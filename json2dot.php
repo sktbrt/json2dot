@@ -11,7 +11,8 @@ $rev = function ($parentName, &$node) use (&$rev, &$list)
   {
     foreach($node as $index => $line)
     {
-      $tmp = $rev("{$parentName}.{$index}", $line);
+      $pName = empty($parentName) ? $index : "{$parentName}.{$index}";
+      $tmp = $rev($pName, $line);
       if(!empty($tmp)) $list[] = $tmp;
     }
   }
@@ -21,12 +22,9 @@ $rev = function ($parentName, &$node) use (&$rev, &$list)
   }
 };
 
-foreach($json as $index => $line)
-{
-  $rev($index, $line);
-}
+$rev(null, $json);
 
-// Output
+// 出力
 foreach($list as $line)
 {
   echo $line."\n";
